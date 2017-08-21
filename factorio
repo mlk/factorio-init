@@ -185,7 +185,7 @@ start_service() {
     echo "" > ${CMDOUT}
   fi
 
-  as_user "tail -f ${FIFO} |${INVOCATION} >> ${CMDOUT} 2>&1 & echo \$! > ${PIDFILE}"
+  as_user "tail -f ${FIFO} | ${INVOCATION} | /opt/Listener/Listener >> ${CMDOUT} 2>&1 & jobs -l | head -2 | tail -1 | cut -f1 -d\|  | tr -d '[:space:]' > ${PIDFILE}"
 
   ps -p $(cat ${PIDFILE}) > /dev/null 2>&1
   if [ "$?" -ne "0" ]; then
